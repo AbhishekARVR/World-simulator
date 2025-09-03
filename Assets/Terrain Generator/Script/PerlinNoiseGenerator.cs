@@ -13,13 +13,13 @@ public class PerlinNoiseGenerator : MonoBehaviour
     [SerializeField] private float scale = 10.0f;
     [SerializeField] private int seed = 0;
     [SerializeField] private float amplitude = 1.0f;
-    [SerializeField] private float minHeight = 0.0f;
+    [Range(10,100)] public int resolution = 0;
 
     #endregion
 
     #region Methods
 
-    public float[,] GeneratePerlinNoise(int resolution) 
+    public float[,] GeneratePerlinNoise() 
     {
         float[,] heights = new float[resolution, resolution];
 
@@ -43,7 +43,6 @@ public class PerlinNoiseGenerator : MonoBehaviour
                 }
 
                 heights[x, y] = noiseHeight;
-                if(x == 0) Debug.Log(noiseHeight);
             }
         }
 

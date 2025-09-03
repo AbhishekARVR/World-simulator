@@ -23,6 +23,8 @@ public class SphereObjectPool : MonoBehaviour
             // Create a default sphere if no prefab is assigned
             spherePrefab = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             spherePrefab.transform.localScale = sphereScale;
+            spherePrefab.transform.parent = transform;
+            DestroyImmediate(spherePrefab.GetComponent<SphereCollider>());
             spherePrefab.SetActive(false);
         }
 
@@ -37,7 +39,18 @@ public class SphereObjectPool : MonoBehaviour
     private void CreateNewSphere()
     {
         if(spherePrefab == null) PrewarmPool();
-        GameObject sphere = Instantiate(spherePrefab, transform);
+        GameObject sphere = Instantiate(spherePrefab);
+        
+        #if UNITY_EDITOR
+                bool canParent = gameObject.scene.IsValid() && !UnityEditor.PrefabUtility.IsPartOfPrefabAsset(gameObject);
+        #else
+                bool canParent = gameObject.scene.IsValid();
+        #endif
+
+        if (canParent)
+        {
+            sphere.transform.SetParent(transform, false);
+        }
         sphere.transform.localScale = sphereScale;
         sphere.SetActive(false);
         availableSpheres.Enqueue(sphere);
@@ -64,7 +77,7 @@ public class SphereObjectPool : MonoBehaviour
             Debug.Log(activeSpheres);
             sphere = activeSpheres[0];
             activeSpheres.RemoveAt(0);
-            sphere.transform.SetParent(transform);
+            TrySetParentToPool(sphere.transform);
         }
         
         sphere.SetActive(true);
@@ -77,7 +90,7 @@ public class SphereObjectPool : MonoBehaviour
         if (sphere == null) return;
         
         sphere.SetActive(false);
-        sphere.transform.SetParent(transform);
+        TrySetParentToPool(sphere.transform);
         sphere.transform.localPosition = Vector3.zero;
         sphere.transform.localRotation = Quaternion.identity;
         
@@ -87,6 +100,19 @@ public class SphereObjectPool : MonoBehaviour
         }
         
         availableSpheres.Enqueue(sphere);
+    }
+
+    private void TrySetParentToPool(Transform child)
+    {
+#if UNITY_EDITOR
+        bool canParent = gameObject.scene.IsValid() && !UnityEditor.PrefabUtility.IsPartOfPrefabAsset(gameObject);
+#else
+        bool canParent = gameObject.scene.IsValid();
+#endif
+        if (canParent)
+        {
+            child.SetParent(transform, false);
+        }
     }
     
     public void ReturnAllSpheres()

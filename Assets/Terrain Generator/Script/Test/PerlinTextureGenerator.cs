@@ -5,7 +5,6 @@ using UnityEngine;
 public class PerlinTextureGenerator : PerlinNoiseGenerator
 {
     #region Variable declaration
-    [SerializeField] private PerlinSphereVisualisation perlinSphereVisualisation;
     private float[,] perlinNoise;
     private Texture2D texture;
     private MeshRenderer meshRenderer;
@@ -15,7 +14,7 @@ public class PerlinTextureGenerator : PerlinNoiseGenerator
     #region Unity methods   
     private void OnValidate() 
     {
-        perlinNoise = GeneratePerlinNoise(perlinSphereVisualisation.resolution);
+        perlinNoise = GeneratePerlinNoise();
         texture = GenerateTexture(perlinNoise);
 
         if(meshRenderer == null) meshRenderer = GetComponent<MeshRenderer>();
@@ -38,7 +37,6 @@ public class PerlinTextureGenerator : PerlinNoiseGenerator
         }
 
         texture.Apply();
-        perlinSphereVisualisation.GeneratePerlinSphereVisualisation(perlinNoise);
         return texture;
     }
 
