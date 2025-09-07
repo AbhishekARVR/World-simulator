@@ -40,7 +40,6 @@ public class PerlinSphereVisualisation : PerlinVerticesGenerator
                  
         for (int i = 0; i < perlinVertices.GetLength(0); i++)
         {
-            Debug.Log(i);
             for (int j = 0; j < perlinVertices.GetLength(1); j++)
             {                          
                 GameObject sphere = spherePool.GetSphere();
