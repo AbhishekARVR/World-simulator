@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Grass
-  m_Shader: {fileID: 4800000, guid: 01eab4087a959ef4cbc34b8a3fba1e1f, type: 3}
+  m_Shader: {fileID: 4800000, guid: 92668556915f01d4db3d4bcda1f6bfce, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -66,13 +66,13 @@ Material:
     m_Ints: []
     m_Floats:
     - _BendRotationRandom: 0
-    - _BladeCurve: 2.23
-    - _BladeForward: 0.34
-    - _BladeHeight: 0.56
-    - _BladeHeightRandom: 0.1
+    - _BladeCurve: 2.87
+    - _BladeForward: 0.25
+    - _BladeHeight: 1.17
+    - _BladeHeightRandom: 0.07
     - _BladeRandomAmount: 0.5
     - _BladeSegments: 3
-    - _BladeWidth: 0.06
+    - _BladeWidth: 0.14
     - _BladeWidthRandom: 0.01
     - _BumpScale: 1
     - _Cutoff: 0.5
@@ -81,6 +81,14 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _Gradient0: 1
+    - _Gradient1: 2
+    - _Gradient2: 2
+    - _Gradient3: 1
+    - _Height0: 2
+    - _Height1: 7
+    - _Height2: 14
+    - _Height3: 20
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -90,16 +98,20 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _TessellationUniform: 6.8
-    - _TranslucentGain: 0
+    - _TessellationUniform: 47.6
+    - _TranslucentGain: 0.416
     - _UVSec: 0
     - _WindScale: 1
-    - _WindStrength: 0.74
+    - _WindStrength: 0.1
     - _ZWrite: 1
     m_Colors:
     - _BottomColor: {r: 0.061297283, g: 0.378, b: 0.07151349, a: 1}
     - _Color: {r: 0, g: 0.5754717, b: 0.06694827, a: 1}
+    - _Color1: {r: 0, g: 0.8, b: 0, a: 1}
+    - _Color2: {r: 0.7, g: 0.6, b: 0.19999996, a: 1}
+    - _Color3: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TopColor: {r: 0.42386082, g: 0.7075472, b: 0.15686187, a: 1}
-    - _WindFrequency: {r: 0.01, g: 0.01, b: 0, a: 0}
+    - _TopColor: {r: 0.5792569, g: 0.84599996, b: 0.3297231, a: 1}
+    - _WaterColor: {r: 0, g: 0.5, b: 1, a: 0.5}
+    - _WindFrequency: {r: 0.1, g: 0.1, b: 0, a: 0}
   m_BuildTextureStacks: []
