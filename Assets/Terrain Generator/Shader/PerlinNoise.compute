@@ -1,27 +1,19 @@
-// PerlinNoise.compute
-// Multi-octave 2D Perlin noise generator
-//
-// Overview
-// - Each thread computes one height sample at integer (x,y) in a resolution x resolution grid
-// - We iterate over multiple octaves, increasing frequency (_Lacunarity) and reducing amplitude (_Persistence)
-// - Results are written into a 1D RWStructuredBuffer<float> with row-major layout: index = x + y * _Resolution
-// - CPU provides offsets and parameters to match CPU implementation for deterministic output per seed
-
 #pragma kernel CSMain
 
 RWStructuredBuffer<float> Heights;
+RWTexture2D<float4> Result;
 
-// Parameters set from C# to mirror the CPU loop
-int _Resolution;  // width/height of the square heightmap
-int _Octaves;     // number of layers
-float _Lacunarity; // frequency multiplier per octave
-float _Persistence; // amplitude multiplier per octave
-float _Scale;     // base frequency scale
-float _Amplitude; // base amplitude for first octave
-float _OffsetX;   // random offset X for de-tiling
-float _OffsetY;   // random offset Y for de-tiling
+int _Resolution; 
+int _Octaves;  
+float _Lacunarity; 
+float _Persistence;
+float _Scale;
+float _Amplitude;
+float _OffsetX;   
+float _OffsetY;  
+float _MaxHeight;
+float _TerraceHeight;
 
-// Simple integer hash to pseudo-randomize gradients
 uint Hash(uint x)
 {
     x += (x << 10u);
@@ -94,7 +86,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
     float freq = max(_Scale, 0.0001);
     float amp = _Amplitude;
     float height = 0.0;
-
+    
     // Match CPU: normalize indices by resolution and apply scale/offset on top
     float2 baseUV = (float2(id.x, id.y) / max(1, _Resolution));
     float2 offset = float2(_OffsetX, _OffsetY);
@@ -109,5 +101,12 @@ void CSMain(uint3 id : SV_DispatchThreadID)
         amp *= _Persistence;
     }
 
+    height = (height-_MaxHeight)/_MaxHeight;
+    
+    int closestTerraceNumber = height/_TerraceHeight;
+    height = (float)closestTerraceNumber * _TerraceHeight;
+
     Heights[index] = height;
+    Result[id.xy] = float4(height, height, height, 1);
+
 }

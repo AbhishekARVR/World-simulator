@@ -1,0 +1,8 @@
+#pragma kernel CSMain
+
+// Thread group size; tune based on target hardware. 8x8 is broadly safe.
+[numthreads(8, 8, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+
+}
