@@ -1,21 +1,7 @@
-#pragma kernel CSMain
+#ifndef PERLIN_NOISE_INCLUDED
+#define PERLIN_NOISE_INCLUDED
 
-RWStructuredBuffer<float> Heights;
-RWTexture2D<float4> Result;
-
-int _Resolution; 
-int _Octaves;  
-float _Lacunarity; 
-float _Persistence;
-float _Scale;
-float _Amplitude;
-float _OffsetX;   
-float _OffsetY;  
-float _MaxHeight;
-float _TerraceHeight;
-float _OffsetManualX;
-float _OffsetManualY;
-
+// Hash function for pseudo-random number generation
 uint Hash(uint x)
 {
     x += (x << 10u);
@@ -78,36 +64,23 @@ float Perlin2(float2 p)
     return 0.5 * (nxy * 0.70710678 + 1.0);
 }
 
-// Thread group size; tune based on target hardware. 8x8 is broadly safe.
-[numthreads(8, 8, 1)]
-void CSMain(uint3 id : SV_DispatchThreadID)
+// Multi-octave Perlin noise function
+float MultiOctavePerlin2(float2 p, int octaves, float lacunarity, float persistence, float scale, float amplitude)
 {
-    if (id.x >= (uint)_Resolution || id.y >= (uint)_Resolution) return;
-    int index = id.x + id.y * _Resolution;
-
-    float freq = max(_Scale, 0.0001);
-    float amp = _Amplitude;
+    float freq = max(scale, 0.0001);
+    float amp = amplitude;
     float height = 0.0;
     
-    // Match CPU: normalize indices by resolution and apply scale/offset on top
-    float2 baseUV = (float2(id.x, id.y) / max(1, _Resolution)) - 0.5;
-    float2 offset = float2(_OffsetX + _OffsetManualX, _OffsetY  + _OffsetManualY);
-
-    [loop]
-    for (int o = 0; o < max(1, _Octaves); o++)
+    for (int o = 0; o < max(1, octaves); o++)
     {
-        float2 sample = baseUV * freq + offset;
+        float2 sample = p * freq;
         float n = Perlin2(sample);
         height += n * amp;
-        freq *= _Lacunarity;
-        amp *= _Persistence;
+        freq *= lacunarity;
+        amp *= persistence;
     }
-
-    // height = (height-_MaxHeight)/_MaxHeight;
     
-    int closestTerraceNumber = height/_TerraceHeight;
-    height = (float)closestTerraceNumber * _TerraceHeight;
-
-    Heights[index] = height;
-    Result[id.xy] = float4(height, height, height, 1);
+    return height;
 }
+
+#endif // PERLIN_NOISE_INCLUDED
