@@ -43,7 +43,8 @@ Shader "Custom/Height"
             // Sample height using the mesh UVs
             float height = tex2Dlod(_MainTex, float4(v.texcoord.xy, 0, 0)).r;
             // Displace along normal
-            v.vertex.xyz += v.normal * (height * _HeightScale);
+            if(height > _MaxHeights[0]) v.vertex.xyz += v.normal * (height * _HeightScale);
+            else v.vertex.xyz += v.normal * (_MaxHeights[0] * _HeightScale);
         }
 
         void surf (Input IN, inout SurfaceOutputStandard o)
