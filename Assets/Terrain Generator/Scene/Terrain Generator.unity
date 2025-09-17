@@ -320,7 +320,6 @@ GameObject:
   - component: {fileID: 1736745829}
   - component: {fileID: 1736745828}
   - component: {fileID: 1736745827}
-  - component: {fileID: 1736745826}
   - component: {fileID: 1736745830}
   m_Layer: 0
   m_Name: Plane
@@ -329,28 +328,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &1736745826
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1736745825}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1736745827
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -400,7 +377,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1736745825}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 0}
 --- !u!4 &1736745829
 Transform:
   m_ObjectHideFlags: 0
@@ -430,6 +407,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seed: 0
   moveSpeed: 1
+  maxUpdatesPerSecond: 30
+  heightBands:
+  - maxHeight: 0.1
+    minHeightColor: {r: 0, g: 0.44154644, b: 0.7264151, a: 1}
+    maxHeightColor: {r: 0.19900322, g: 0.6744149, b: 0.9811321, a: 1}
+  - maxHeight: 0.3
+    minHeightColor: {r: 0.6273585, g: 1, b: 0.6620228, a: 1}
+    maxHeightColor: {r: 0.070549816, g: 0.6603774, b: 0.015574936, a: 1}
+  - maxHeight: 0.5
+    minHeightColor: {r: 0.8207547, g: 0.5811163, b: 0.2981043, a: 1}
+    maxHeightColor: {r: 0.6226415, g: 0.36266285, b: 0.055802763, a: 1}
+  - maxHeight: 0.7
+    minHeightColor: {r: 0.7122642, g: 0.95704055, b: 1, a: 1}
+    maxHeightColor: {r: 0.8726415, g: 0.9740409, b: 1, a: 1}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

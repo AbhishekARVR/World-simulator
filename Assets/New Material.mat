@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: New Material
-  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 35728ada4996e714eb320540091dcec1, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -61,6 +61,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BandCount: 4
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -68,6 +69,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _HeightScale: 5
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -80,4 +82,7 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _MaxHeightColors: {r: 1, g: 1, b: 1, a: 1}
+    - _MaxHeights: {r: 0.2, g: 0.4, b: 0.6, a: 0.8}
+    - _MinHeightColors: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
