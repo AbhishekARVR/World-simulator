@@ -1,0 +1,86 @@
+#ifndef PERLIN_NOISE_INCLUDED
+#define PERLIN_NOISE_INCLUDED
+
+// Hash function for pseudo-random number generation
+uint Hash(uint x)
+{
+    x += (x << 10u);
+    x ^= (x >> 6u);
+    x += (x << 3u);
+    x ^= (x >> 11u);
+    x += (x << 15u);
+    return x;
+}
+
+// Perlin's fade function for smooth interpolation
+float2 Fade2(float2 t)
+{
+    return t * t * t * (t * (t * 6.0 - 15.0) + 10.0);
+}
+
+// 2D gradient selection based on hashed corner index
+float Grad2(uint h, float2 p)
+{
+    // 8 gradient directions
+    switch (h & 7u)
+    {
+        case 0u: return  p.x + p.y;
+        case 1u: return  p.x - p.y;
+        case 2u: return -p.x + p.y;
+        case 3u: return -p.x - p.y;
+        case 4u: return  p.x;
+        case 5u: return -p.x;
+        case 6u: return  p.y;
+        default: return -p.y;
+    }
+}
+
+// Single-octave 2D Perlin noise in [0,1]
+float Perlin2(float2 p)
+{
+    float2 pi = floor(p);
+    float2 pf = p - pi;
+
+    uint xi = (uint)pi.x;
+    uint yi = (uint)pi.y;
+
+    uint h00 = Hash(Hash(xi) ^ yi);
+    uint h10 = Hash(Hash(xi + 1u) ^ yi);
+    uint h01 = Hash(Hash(xi) ^ (yi + 1u));
+    uint h11 = Hash(Hash(xi + 1u) ^ (yi + 1u));
+
+    float n00 = Grad2(h00, pf + float2(0.0, 0.0));
+    float n10 = Grad2(h10, pf + float2(-1.0, 0.0));
+    float n01 = Grad2(h01, pf + float2(0.0, -1.0));
+    float n11 = Grad2(h11, pf + float2(-1.0, -1.0));
+
+    float2 u = Fade2(pf);
+
+    float nx0 = lerp(n00, n10, u.x);
+    float nx1 = lerp(n01, n11, u.x);
+    float nxy = lerp(nx0, nx1, u.y);
+
+    // Normalize to [0,1]
+    return 0.5 * (nxy * 0.70710678 + 1.0);
+}
+
+// Multi-octave Perlin noise function
+float MultiOctavePerlin2(float2 p, int octaves, float lacunarity, float persistence, float scale, float amplitude)
+{
+    float freq = max(scale, 0.0001);
+    float amp = amplitude;
+    float height = 0.0;
+    
+    for (int o = 0; o < max(1, octaves); o++)
+    {
+        float2 sample = p * freq;
+        float n = Perlin2(sample);
+        height += n * amp;
+        freq *= lacunarity;
+        amp *= persistence;
+    }
+    
+    return height;
+}
+
+#endif // PERLIN_NOISE_INCLUDED
