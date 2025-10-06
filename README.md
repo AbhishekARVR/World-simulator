@@ -4,17 +4,16 @@ A Unity-based 3D world simulation engine featuring procedural terrain generation
 ## ✨ Key Features
 
 ### Procedural Terrain Generation
-- **Perlin Noise Implementation**: Custom procedural noise generator for realistic terrain
-- **Marching square Algorithm**: GPU-accelerated mesh generation using compute shaders
-- **Optimized Performance**: Achieved 1000+ FPS through compute shader optimization
+- **Perlin Noise Implementation**: Custom compute shader based procedural noise generator for realistic terrain
+- **Optimized Performance**: Achieved 1000+ FPS through compute shader optimization and vertex deformation for terrain
 
 ### 3D Cloth Simulation
 - **Physics-Based Cloth**: Real-time 3D cloth simulation with gravity and constraint solving
 - **Length Constraints**: Implemented structural and shear constraints for realistic fabric behavior
 
-### Custom Shaders & Graphics
+### Geometry Shader Based Grass Simulation
 - **Geometry Grass Shader**: Procedurally generated grass using geometry shaders with custom tesselation
-- **Custom Vertex Manipulation**: Advanced vertex displacement techniques
+- **Custom Vertex Manipulation**: Advanced vertex displacement techniques with wind animations
 
 ## 📈 Development Timeline (DevLog)
 
@@ -23,7 +22,7 @@ A Unity-based 3D world simulation engine featuring procedural terrain generation
 - ✅ **CPU Implementation**: CPU-based cloth physics implementation finalized
 
 ### September 20, 2025
-- ✅ **Marching Cubes Integration**: Merged PR #6 - GPU-accelerated marching cubes mesh generation using compute shaders
+- ✅ **Merged PR #6 - Optimized mesh generation
 
 ### September 17, 2025
 - ✅ **Water System**: Added terrain flattening for water bodies
